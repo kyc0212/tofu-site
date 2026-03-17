@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>嘟嘟嘟嘟maxverstappen豆花店</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <section id="landingSection" class="landing-section">
+      <header class="hero-header">
+        <span class="hero-badge">Dessert Speed Zone</span>
+        <h1>嘟嘟嘟嘟maxverstappen豆花店</h1>
+        <p class="hero-tagline">豆花也可以有速度感，甜品直接拉滿存在感。</p>
+        <p class="hero-sub">先輸入桌號，馬上進入甜品菜單，配料加點一次搞定。</p>
+      </header>
+
+      <div class="hero-grid">
+        <article class="start-card">
+          <h2>開始點餐</h2>
+          <p>先輸入桌號，等等送單和取餐會更順。</p>
+          <label for="customerInfoInput">桌號</label>
+          <input id="customerInfoInput" type="text" placeholder="例如：B05" />
+          <button id="startOrderBtn" class="primary-btn">開始點餐</button>
+          <p class="mini-note">分類包含：傳統豆花、配料加點、冷熱甜品、飲品</p>
+        </article>
+
+        <aside class="visual-card" aria-hidden="true">
+          <div class="visual-layer visual-layer-a"></div>
+          <div class="visual-layer visual-layer-b"></div>
+          <div class="visual-content">
+            <span>Red Bull 風格甜品站</span>
+            <strong>高辨識配色、清楚排版、直接點餐。</strong>
+            <p>不是一般表單頁，是有品牌感的豆花店點餐網站。</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="menuSection" class="menu-section hidden">
+      <header class="menu-topbar">
+        <div>
+          <p class="eyebrow">現在點餐中</p>
+          <h2>嘟嘟嘟嘟maxverstappen豆花店</h2>
+          <p id="customerDisplay" class="customer-display"></p>
+        </div>
+        <div class="topbar-actions">
+          <button id="backToHomeBtn" class="ghost-btn">回首頁</button>
+          <button id="cartFab" class="cart-fab">
+            購物車 <span id="cartCountBadge">0</span>
+          </button>
+        </div>
+      </header>
+
+      <nav id="categoryNav" class="category-nav" aria-label="商品分類"></nav>
+
+      <main>
+        <section class="featured-banner">
+          <div>
+            <p class="eyebrow">人氣推薦</p>
+            <h3>今天來點滑順又有料的，配料可以大膽加。</h3>
+          </div>
+          <button id="scrollToMenuBtn" class="secondary-btn">看全部菜單</button>
+        </section>
+
+        <section id="menuGrid" class="menu-grid"></section>
+      </main>
+    </section>
+  </div>
+
+  <aside id="cartDrawer" class="cart-drawer" aria-hidden="true">
+    <div class="cart-header">
+      <div>
+        <p class="eyebrow">購物車</p>
+        <h3>你的甜品</h3>
+      </div>
+      <button id="closeCartBtn" class="icon-btn" aria-label="關閉購物車">×</button>
+    </div>
+
+    <div id="cartItems" class="cart-items"></div>
+
+    <div class="cart-footer">
+      <div class="payment-section">
+        <p class="payment-title">付款方式</p>
+        <div class="payment-options">
+          <button class="payment-option" data-payment="cash">現金結帳</button>
+          <button class="payment-option" data-payment="online">線上結帳</button>
+        </div>
+        <p id="paymentHint" class="payment-hint">請先選擇付款方式。</p>
+      </div>
+
+      <div class="cart-total-row">
+        <span>總金額</span>
+        <strong id="cartTotal">NT$ 0</strong>
+      </div>
+
+      <button id="checkoutBtn" class="primary-btn full-width">確認送出訂單</button>
+    </div>
+  </aside>
+
+  <div id="drawerBackdrop" class="drawer-backdrop hidden"></div>
+
+  <div id="productModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-dialog">
+      <button id="closeModalBtn" class="icon-btn modal-close" aria-label="關閉商品詳情">×</button>
+      <div class="modal-layout">
+        <div class="modal-image-wrap">
+          <img id="modalImage" src="" alt="" />
+        </div>
+        <div class="modal-content">
+          <p id="modalCategory" class="eyebrow"></p>
+          <h3 id="modalName"></h3>
+          <p id="modalDescription" class="modal-description"></p>
+          <strong id="modalPrice" class="modal-price"></strong>
+
+          <div id="standardOptionsBlock" class="option-block hidden">
+            <p class="option-title">加選項</p>
+            <div id="standardOptionsList" class="option-list"></div>
+          </div>
+
+          <div id="drinkOptionsBlock" class="option-block hidden">
+            <div class="select-grid">
+              <label>
+                <span>甜度</span>
+                <select id="sweetnessSelect"></select>
+              </label>
+              <label>
+                <span>冰量</span>
+                <select id="iceSelect"></select>
+              </label>
+            </div>
+            <p class="option-title">加料</p>
+            <div id="toppingsList" class="option-list"></div>
+          </div>
+
+          <label class="notes-field">
+            <span>備註</span>
+            <textarea id="itemNote" rows="3" placeholder="例如：糖水另外放、不要花生"></textarea>
+          </label>
+
+          <div class="qty-row">
+            <div class="qty-control">
+              <button id="decreaseQtyBtn" class="icon-btn" type="button">−</button>
+              <span id="itemQty">1</span>
+              <button id="increaseQtyBtn" class="icon-btn" type="button">＋</button>
+            </div>
+            <button id="addToCartBtn" class="primary-btn">加入購物車</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="completionScreen" class="completion-screen hidden">
+    <div class="completion-card">
+      <p id="completionBadge" class="completion-badge"></p>
+      <h2 id="completionTitle"></h2>
+      <p id="completionMessage" class="completion-message"></p>
+
+      <div class="summary-box">
+        <p><strong>訂單編號：</strong><span id="summaryOrderId"></span></p>
+        <p><strong>桌號：</strong><span id="summaryCustomerInfo"></span></p>
+        <p><strong>付款方式：</strong><span id="summaryPaymentMethod"></span></p>
+        <p><strong>總金額：</strong><span id="summaryTotal"></span></p>
+        <p><strong>下單時間：</strong><span id="summaryTime"></span></p>
+      </div>
+
+      <div id="summaryItems" class="summary-items"></div>
+
+      <div class="completion-actions">
+        <button id="copyOrderBtn" class="secondary-btn">複製訂單摘要</button>
+        <button id="downloadTxtBtn" class="ghost-btn">下載 TXT</button>
+        <button id="downloadJsonBtn" class="ghost-btn">下載 JSON</button>
+        <button id="finishBtn" class="primary-btn">返回首頁</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
